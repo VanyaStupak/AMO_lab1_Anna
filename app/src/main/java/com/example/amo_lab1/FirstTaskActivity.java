@@ -29,7 +29,7 @@ import java.util.List;
 
 public class FirstTaskActivity extends AppCompatActivity {
     private TextView result;
-    private EditText enterA, enterB, enterC,enterD;
+    private EditText enterA, enterB, enterX;
     private File example;
 
     @Override
@@ -39,13 +39,12 @@ public class FirstTaskActivity extends AppCompatActivity {
         result = findViewById(R.id.resout);
         enterA = findViewById(R.id.enterA);
         enterB = findViewById(R.id.enterB);
-        enterC = findViewById(R.id.enterC);
-        enterD = findViewById(R.id.enterD);
+        enterX = findViewById(R.id.enterX);
         Button count = findViewById(R.id.count);
         Button readButton = findViewById(R.id.button4);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#3FAC5A"));
+                = new ColorDrawable(Color.parseColor("#0321CA"));
         actionBar.setBackgroundDrawable(colorDrawable);
 
         count.setOnClickListener(new View.OnClickListener() {
@@ -54,14 +53,11 @@ public class FirstTaskActivity extends AppCompatActivity {
                 try {
                     double A = Double.parseDouble(enterA.getText().toString());
                     double B = Double.parseDouble(enterB.getText().toString());
-                    double C = Double.parseDouble(enterC.getText().toString());
-                    double D = Double.parseDouble(enterD.getText().toString());
-                    if (C == 0 || D == 0 || (Math.sqrt(B) - Math.pow(A,2) == 0)) {
+                    double X = Double.parseDouble(enterX.getText().toString());
+                    if (X == 0 ) {
                         result.setText("Помилка, ділення на 0");
-                    } else if (A < 0 || B < 0 || ((A*B)/(C*D)) < 0) {
-                        result.setText("Помилка, число або вираз під коренем меньше 0");
                     } else {
-                        result.setText(String.format("%.5f", ((Math.sqrt(A)+Math.pow(B,2))/(Math.sqrt(B)-Math.pow(A,2))) + Math.sqrt((A*B)/(C*D))));
+                        result.setText(String.format("%.2f", Math.pow((A+(B/X)),3) + Math.pow((B+(A/X)),5)));
                     }
                 } catch (NumberFormatException e) {
                     TextView result = (TextView) findViewById(R.id.resout);
@@ -72,7 +68,7 @@ public class FirstTaskActivity extends AppCompatActivity {
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "66\n504\n2.4\n19";
+                String txt = "4\n5\n-6";
                 try {
                     example = new File("example.txt");
                     FileOutputStream fileOutput = openFileOutput(example.getName(), MODE_PRIVATE);
@@ -88,8 +84,8 @@ public class FirstTaskActivity extends AppCompatActivity {
                     BufferedReader buffer = new BufferedReader(reader);
                     enterA.setText(buffer.readLine());
                     enterB.setText(buffer.readLine());
-                    enterC.setText(buffer.readLine());
-                    enterD.setText(buffer.readLine());
+                    enterX.setText(buffer.readLine());
+
                     fileInput.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

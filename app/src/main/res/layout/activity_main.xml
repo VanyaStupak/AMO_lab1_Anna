@@ -8,9 +8,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,25 +19,27 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="300dp"
+            android:layout_width="140dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:layout_marginEnd="3dp"
             android:onClick="startNewActivity1"
             android:text="перше завдання"
             android:backgroundTint="@color/button"/>
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="300dp"
+            android:layout_width="140dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
+            android:layout_marginEnd="3dp"
             android:onClick="startNewActivity2"
             android:text="друге завдання"
             android:backgroundTint="@color/button"/>
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/button"

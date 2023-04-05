@@ -27,12 +27,10 @@ public class ThirdTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_third_task);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#3FAC5A"));
+                = new ColorDrawable(Color.parseColor("#0321CA"));
         actionBar.setBackgroundDrawable(colorDrawable);
         Button countButton = findViewById(R.id.countButton);
-        EditText enterP = findViewById(R.id.enterP);
-        EditText enterA = findViewById(R.id.enterA);
-        EditText enterB = findViewById(R.id.enterB);
+        EditText enterN = findViewById(R.id.enterN);
         TextView result3 = findViewById(R.id.resout3);
         Button readButton = findViewById(R.id.button6);
 
@@ -40,22 +38,26 @@ public class ThirdTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    double P = Double.parseDouble(enterP.getText().toString());
-                    double A = Double.parseDouble(enterA.getText().toString());
-                    double B = Double.parseDouble(enterB.getText().toString());
-                    if((A + B) < 0){
-                        result3.setText("Помилка, число або вираз під коренем меньше 0");
+                    int N = Integer.parseInt(enterN.getText().toString());
+                    double [] a = new double[N+1];
+                    double [] b = new double[N+1];
+                    a[0] = 0.0;
+                    b[0] = 0.0;
+                    if(N < 1) {
+                        result3.setText("Значення n має бути більшим або дорівнювати 1");
                     }else {
-                        double sum = 0.0;
-                        for (int i = 1; i <= P; i++) {
-                            for (int j = 1; j <= P; j++) {
-                                for (int k = 1; k <= P; k++) {
-                                    double term = i * (i * j * (i * j * k * Math.sqrt(A + B)));
-                                    sum += term;
-                                }
-                            }
+                        for (int k = 1; k < a.length; k++) {
+                            a[k] = k * 10.0;
+                            b[k] = k * 5.0;
                         }
-                        result3.setText(String.format("%.5f", sum));
+                        double multiplication = 1;
+                        double sum = 0;
+                        for (int i = 1; i <= N; i++) {
+                            multiplication *= Math.pow(a[i], 3) - Math.pow(b[i], 3);
+                            sum += Math.pow(a[i], 3) + Math.pow(b[i], 3);
+                        }
+
+                        result3.setText(String.format("%.2f", multiplication + sum));
                     }
                 } catch (NumberFormatException e) {
                     result3.setText("Введіть коректні числа");
@@ -66,7 +68,7 @@ public class ThirdTaskActivity extends AppCompatActivity {
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "5\n7\n-2";
+                String txt = "3";
                 try {
                     File file = new File("example.txt");FileOutputStream fileOutput = openFileOutput(file.getName(), MODE_PRIVATE);
                     fileOutput.write(txt.getBytes());
@@ -79,9 +81,7 @@ public class ThirdTaskActivity extends AppCompatActivity {
                     FileInputStream fileInput = openFileInput("example.txt");
                     InputStreamReader reader = new InputStreamReader(fileInput);
                     BufferedReader buffer = new BufferedReader(reader);
-                    enterP.setText(buffer.readLine());
-                    enterA.setText(buffer.readLine());
-                    enterB.setText(buffer.readLine());
+                    enterN.setText(buffer.readLine());
                     fileInput.close();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -3,7 +3,6 @@ package com.example.amo_lab1;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,7 +22,7 @@ import java.io.InputStreamReader;
 
 public class SecondTaskActivity extends AppCompatActivity {
     private TextView result2;
-    private EditText enterK, enterA, enterC;
+    private EditText enterI, enterX;
     private Button readButton3;
 
     @Override
@@ -31,29 +30,47 @@ public class SecondTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_task);
         result2 = findViewById(R.id.resout2);
-        enterK = findViewById(R.id.editTextTextPersonName2);
-        enterA = findViewById(R.id.editTextTextPersonName21);
-        enterC = findViewById(R.id.editTextTextPersonName22);
+        enterI = findViewById(R.id.editTextTextPersonName2);
+        enterX = findViewById(R.id.editTextTextPersonName21);
 
         readButton3 = findViewById(R.id.input1);
         Button count2 = findViewById(R.id.count2);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#3FAC5A"));
+                = new ColorDrawable(Color.parseColor("#0321CA"));
         actionBar.setBackgroundDrawable(colorDrawable);
         count2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    double K = Double.parseDouble(enterK.getText().toString());
-                    double C = Double.parseDouble(enterC.getText().toString());
-                    double A = Double.parseDouble(enterA.getText().toString());
-                    if (K < 10) {
-                            double res1 = Math.pow((A+C),4) + Math.pow((A-C),2);
-                            result2.setText(String.format("%.5f", res1));
+                    int I = Integer.parseInt(enterI.getText().toString());
+                    double X = Double.parseDouble(enterX.getText().toString());
+                    if(I < 0) {
+                        result2.setText("Помилка! Вираз під коренем меньше 0");
                     } else {
-                        double res2 = Math.pow((A-C),3) + Math.pow((A+C),2);
-                        result2.setText(String.format("%.5f", res2));
+                        int[] C = new int[I + 1];
+                        for (int k = 1; k <= C.length; k++) {
+                            C[k - 1] = k * 10;
+                        }
+
+                        if (I % 2 != 0) {
+                            if (X == 0) {
+                                result2.setText("Помилка! Ділення на 0");
+                            } else if (I < 0) {
+                                result2.setText("Помилка! Вираз під коренем меньше 0");
+                            } else {
+                                result2.setText(String.format("%.2f", 25 * Math.pow(C[I], 2) - Math.sqrt(2 * I / 34 * Math.pow(X, 2)) + 4 * Math.sqrt(I / 45 * Math.pow(X, 2))));
+                            }
+
+                        } else {
+                            if (C[I] == 0) {
+                                result2.setText("Помилка! Ділення на 0");
+                            } else if (I < 0) {
+                                result2.setText("Помилка! Вираз під коренем меньше 0");
+                            } else {
+                                result2.setText(String.format("%.2f", 25 * Math.pow(X, 2) - Math.sqrt(2 * I / 34 * Math.pow(C[I], 2)) + 4 * Math.sqrt(I / 45 * Math.pow(C[I], 2))));
+                            }
+                        }
                     }
                 } catch (NumberFormatException e) {
                     TextView result2 = (TextView) findViewById(R.id.resout2);
@@ -66,7 +83,7 @@ public class SecondTaskActivity extends AppCompatActivity {
         readButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "12\n36.6\n-4";
+                String txt = "12\n36.6";
                 try {
                     File file = new File("example.txt");
                     FileOutputStream fileOutput = openFileOutput(file.getName(), MODE_PRIVATE);
@@ -80,9 +97,8 @@ public class SecondTaskActivity extends AppCompatActivity {
                     FileInputStream fileInput = openFileInput("example.txt");
                     InputStreamReader reader = new InputStreamReader(fileInput);
                     BufferedReader buffer = new BufferedReader(reader);
-                    enterK.setText(buffer.readLine());
-                    enterA.setText(buffer.readLine());
-                    enterC.setText(buffer.readLine());
+                    enterI.setText(buffer.readLine());
+                    enterX.setText(buffer.readLine());
 
                     fileInput.close();
                 } catch (IOException e) {
