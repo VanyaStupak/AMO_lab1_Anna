@@ -39,36 +39,39 @@ public class FirstTaskActivity extends AppCompatActivity {
         result = findViewById(R.id.resout);
         enterA = findViewById(R.id.enterA);
         enterB = findViewById(R.id.enterB);
-        enterX = findViewById(R.id.enterX);
         Button count = findViewById(R.id.count);
         Button readButton = findViewById(R.id.button4);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#0321CA"));
+                = new ColorDrawable(Color.parseColor("#DA0F00"));
         actionBar.setBackgroundDrawable(colorDrawable);
 
         count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    double A = Double.parseDouble(enterA.getText().toString());
-                    double B = Double.parseDouble(enterB.getText().toString());
-                    double X = Double.parseDouble(enterX.getText().toString());
-                    if (X == 0 ) {
+                    double num1 = Double.parseDouble(enterA.getText().toString());
+                    double num2 = Double.parseDouble(enterB.getText().toString());
+                    double sqrt = Math.sqrt((num2 / num1 + 5) / 3);
+                    double res = ((num1 / num2 - 5) / 2) + sqrt;
+                    if (num1 == 0 || num2 == 0) {
                         result.setText("Помилка, ділення на 0");
+                    } else if (((num2 / num1 + 5) / 3) < 0) {
+                        result.setText("Помилка, число під коренем менше 0");
                     } else {
-                        result.setText(String.format("%.2f", Math.pow((A+(B/X)),3) + Math.pow((B+(A/X)),5)));
+                        result.setText(String.format("%.5f", res));
                     }
                 } catch (NumberFormatException e) {
                     TextView result = (TextView) findViewById(R.id.resout);
-                    result.setText("Введіть коректні  числа");
+                    result.setText("Введіть коректні числа");
                 }
+
             }
         });
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "4\n5\n-6";
+                String txt = "234\n-8";
                 try {
                     example = new File("example.txt");
                     FileOutputStream fileOutput = openFileOutput(example.getName(), MODE_PRIVATE);
@@ -84,7 +87,6 @@ public class FirstTaskActivity extends AppCompatActivity {
                     BufferedReader buffer = new BufferedReader(reader);
                     enterA.setText(buffer.readLine());
                     enterB.setText(buffer.readLine());
-                    enterX.setText(buffer.readLine());
 
                     fileInput.close();
                 } catch (IOException e) {
@@ -92,12 +94,6 @@ public class FirstTaskActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-
-    public void goBack(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
 

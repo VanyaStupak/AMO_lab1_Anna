@@ -27,7 +27,7 @@ public class ThirdTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_third_task);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#0321CA"));
+                = new ColorDrawable(Color.parseColor("#DA0F00"));
         actionBar.setBackgroundDrawable(colorDrawable);
         Button countButton = findViewById(R.id.countButton);
         EditText enterN = findViewById(R.id.enterN);
@@ -38,39 +38,41 @@ public class ThirdTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    int N = Integer.parseInt(enterN.getText().toString());
-                    double [] a = new double[N+1];
-                    double [] b = new double[N+1];
-                    a[0] = 0.0;
-                    b[0] = 0.0;
-                    if(N < 1) {
-                        result3.setText("Значення n має бути більшим або дорівнювати 1");
-                    }else {
-                        for (int k = 1; k < a.length; k++) {
-                            a[k] = k * 10.0;
-                            b[k] = k * 5.0;
-                        }
-                        double multiplication = 1;
-                        double sum = 0;
-                        for (int i = 1; i <= N; i++) {
-                            multiplication *= Math.pow(a[i], 3) - Math.pow(b[i], 3);
-                            sum += Math.pow(a[i], 3) + Math.pow(b[i], 3);
-                        }
+                    double n = Double.parseDouble(enterN.getText().toString());
+                    if (n >= 19) {
+                        result3.setText("Число занадто велике");
+                    } else if (n < 1) {
+                        result3.setText("Так наче не файно робити n меньше 1");
+                    } else {
+                        double f = 1;
+                        double temp;
+                        for (double a = 1; a <= n; a += 0.25) {
+                            temp = 1;
+                            for (double b = 1; b <= n; b++) {
+                                if ((Math.pow(a, 4)) - (Math.pow(b, 4)) != 0) {
+                                    temp *= ((Math.pow(a, 4)) + (Math.pow(b, 4))) / ((Math.pow(a, 4)) - (Math.pow(b, 4)));
+                                }
+                            }
 
-                        result3.setText(String.format("%.2f", multiplication + sum));
+                            f *= temp;
+
+                        }
+                        result3.setText(String.format("%.5f", f));
                     }
                 } catch (NumberFormatException e) {
-                    result3.setText("Введіть коректні числа");
+                    result3.setText("Введіть коректнe число");
                 }
 
             }
+
         });
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String txt = "3";
                 try {
-                    File file = new File("example.txt");FileOutputStream fileOutput = openFileOutput(file.getName(), MODE_PRIVATE);
+                    File file = new File("example.txt");
+                    FileOutputStream fileOutput = openFileOutput(file.getName(), MODE_PRIVATE);
                     fileOutput.write(txt.getBytes());
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);

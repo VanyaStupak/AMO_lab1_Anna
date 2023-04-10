@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 
 public class SecondTaskActivity extends AppCompatActivity {
     private TextView result2;
-    private EditText enterI, enterX;
+    private EditText enterI, enterX, enterC, enterD, enterH, enterP, enterQ, enterV;
     private Button readButton3;
 
     @Override
@@ -30,51 +30,53 @@ public class SecondTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_task);
         result2 = findViewById(R.id.resout2);
-        enterI = findViewById(R.id.editTextTextPersonName2);
-        enterX = findViewById(R.id.editTextTextPersonName21);
+        enterI = findViewById(R.id.enterI);
+        enterC = findViewById(R.id.enterC);
+        enterD = findViewById(R.id.enterD);
+        enterH = findViewById(R.id.enterH);
+        enterP = findViewById(R.id.enterP);
+        enterQ = findViewById(R.id.enterQ);
+        enterV = findViewById(R.id.enterV);
+        enterX = findViewById(R.id.enterX);
 
         readButton3 = findViewById(R.id.input1);
         Button count2 = findViewById(R.id.count2);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#0321CA"));
+                = new ColorDrawable(Color.parseColor("#DA0F00"));
         actionBar.setBackgroundDrawable(colorDrawable);
         count2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    int I = Integer.parseInt(enterI.getText().toString());
+                    double I = Double.parseDouble(enterI.getText().toString());
+                    double C = Double.parseDouble(enterC.getText().toString());
+                    double D = Double.parseDouble(enterD.getText().toString());
+                    double H = Double.parseDouble(enterH.getText().toString());
+                    double P = Double.parseDouble(enterP.getText().toString());
+                    double Q = Double.parseDouble(enterQ.getText().toString());
+                    double V = Double.parseDouble(enterV.getText().toString());
                     double X = Double.parseDouble(enterX.getText().toString());
-                    if(I < 0) {
-                        result2.setText("Помилка! Вираз під коренем меньше 0");
-                    } else {
-                        int[] C = new int[I + 1];
-                        for (int k = 1; k <= C.length; k++) {
-                            C[k - 1] = k * 10;
-                        }
-
-                        if (I % 2 != 0) {
-                            if (X == 0) {
-                                result2.setText("Помилка! Ділення на 0");
-                            } else if (I < 0) {
-                                result2.setText("Помилка! Вираз під коренем меньше 0");
-                            } else {
-                                result2.setText(String.format("%.2f", 25 * Math.pow(C[I], 2) - Math.sqrt(2 * I / 34 * Math.pow(X, 2)) + 4 * Math.sqrt(I / 45 * Math.pow(X, 2))));
-                            }
-
+                    if (I % 3 == 0) {
+                        if ((V + X) <= 0 || (C + H) <= 0) {
+                            result2.setText("Помилка, ділення на 0 або вираз під коренем < 0");
                         } else {
-                            if (C[I] == 0) {
-                                result2.setText("Помилка! Ділення на 0");
-                            } else if (I < 0) {
-                                result2.setText("Помилка! Вираз під коренем меньше 0");
-                            } else {
-                                result2.setText(String.format("%.2f", 25 * Math.pow(X, 2) - Math.sqrt(2 * I / 34 * Math.pow(C[I], 2)) + 4 * Math.sqrt(I / 45 * Math.pow(C[I], 2))));
-                            }
+                            double res1 = ((Math.pow(Q, I) * D) / (Math.sqrt(V + X))) + ((Math.pow(P, I) * D) / (Math.sqrt(C + H)));
+                            result2.setText(String.format("%.5f", res1));
+
+
                         }
+                    } else if ((Math.pow(Q, I) + X) <= 0 || (Math.pow(P, I) + H) <= 0) {
+
+                        result2.setText("Помилка, ділення на 0 або вираз під коренем < 0");
+                    } else {
+                        double res2 = ((V * D) / Math.sqrt(Math.pow(Q, I) + X)) + (C * D / Math.sqrt(Math.pow(P, I) + H));
+                        result2.setText(String.format("%.5f", res2));
                     }
                 } catch (NumberFormatException e) {
                     TextView result2 = (TextView) findViewById(R.id.resout2);
-                    result2.setText("Введіть коректні  числа");
+                    result2.setText("Введіть коректні числа");
+
                 }
             }
 
@@ -83,7 +85,7 @@ public class SecondTaskActivity extends AppCompatActivity {
         readButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "12\n36.6";
+                String txt = "3\n36.6\n-4\n100\n29\n-34\n7.5\n43";
                 try {
                     File file = new File("example.txt");
                     FileOutputStream fileOutput = openFileOutput(file.getName(), MODE_PRIVATE);
@@ -98,6 +100,12 @@ public class SecondTaskActivity extends AppCompatActivity {
                     InputStreamReader reader = new InputStreamReader(fileInput);
                     BufferedReader buffer = new BufferedReader(reader);
                     enterI.setText(buffer.readLine());
+                    enterC.setText(buffer.readLine());
+                    enterD.setText(buffer.readLine());
+                    enterH.setText(buffer.readLine());
+                    enterP.setText(buffer.readLine());
+                    enterQ.setText(buffer.readLine());
+                    enterV.setText(buffer.readLine());
                     enterX.setText(buffer.readLine());
 
                     fileInput.close();
@@ -108,9 +116,4 @@ public class SecondTaskActivity extends AppCompatActivity {
         });
     }
 
-
-    public void goBack(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
 }
