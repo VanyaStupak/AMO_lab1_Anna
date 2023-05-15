@@ -19,6 +19,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class ThirdTaskActivity extends AppCompatActivity {
     @Override
@@ -27,49 +31,45 @@ public class ThirdTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_third_task);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#DA0F00"));
+                = new ColorDrawable(Color.parseColor("#E10DC5"));
         actionBar.setBackgroundDrawable(colorDrawable);
         Button countButton = findViewById(R.id.countButton);
         EditText enterN = findViewById(R.id.enterN);
         TextView result3 = findViewById(R.id.resout3);
         Button readButton = findViewById(R.id.button6);
+        TextView arrays = findViewById(R.id.arraystext);
 
         countButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    double n = Double.parseDouble(enterN.getText().toString());
-                    if (n >= 19) {
-                        result3.setText("Число занадто велике");
-                    } else if (n < 1) {
-                        result3.setText("Так наче не файно робити n меньше 1");
-                    } else {
-                        double f = 1;
-                        double temp;
-                        for (double a = 1; a <= n; a += 0.25) {
-                            temp = 1;
-                            for (double b = 1; b <= n; b++) {
-                                if ((Math.pow(a, 4)) - (Math.pow(b, 4)) != 0) {
-                                    temp *= ((Math.pow(a, 4)) + (Math.pow(b, 4))) / ((Math.pow(a, 4)) - (Math.pow(b, 4)));
-                                }
-                            }
+                    int n = Integer.parseInt(String.valueOf(enterN.getText()));
+                    List<Integer> a = new ArrayList<>();
+                    List<Integer> c = new ArrayList<>();
+                    List<Integer> g = new ArrayList<>();
 
-                            f *= temp;
+                    Random random = new Random();
 
-                        }
-                        result3.setText(String.format("%.5f", f));
+                    for (int i = 0; i < n; i++) {
+                        a.add(random.nextInt(10 - (-10) + 1) + (-10));
+                        c.add(random.nextInt(10 - (-10) + 1) + (-10));
+                        g.add(random.nextInt(10 - (-10) + 1) + (-10));
                     }
+                    int f = 0;
+                    arrays.setText("a = " + String.valueOf(a) +"\n" +"c = " + String.valueOf(c) + "\n" + "g = " + String.valueOf(g));
+                    for (int i = 0; i < n; i++) {
+                        f += Math.pow(a.get(i), 2) + (56 * c.get(i) * f * g.get(i));
+                    }
+                    result3.setText(String.valueOf(f));
                 } catch (NumberFormatException e) {
                     result3.setText("Введіть коректнe число");
                 }
-
             }
-
         });
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "3";
+                String txt = "10";
                 try {
                     File file = new File("example.txt");
                     FileOutputStream fileOutput = openFileOutput(file.getName(), MODE_PRIVATE);

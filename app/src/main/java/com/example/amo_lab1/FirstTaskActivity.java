@@ -29,7 +29,7 @@ import java.util.List;
 
 public class FirstTaskActivity extends AppCompatActivity {
     private TextView result;
-    private EditText enterA, enterB, enterX;
+    private EditText enterA, enterC;
     private File example;
 
     @Override
@@ -38,25 +38,25 @@ public class FirstTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_first_task);
         result = findViewById(R.id.resout);
         enterA = findViewById(R.id.enterA);
-        enterB = findViewById(R.id.enterB);
+        enterC = findViewById(R.id.enterC);
         Button count = findViewById(R.id.count);
         Button readButton = findViewById(R.id.button4);
         ActionBar actionBar = getSupportActionBar();
         ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#DA0F00"));
+                = new ColorDrawable(Color.parseColor("#E10DC5"));
         actionBar.setBackgroundDrawable(colorDrawable);
 
         count.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    double num1 = Double.parseDouble(enterA.getText().toString());
-                    double num2 = Double.parseDouble(enterB.getText().toString());
-                    double sqrt = Math.sqrt((num2 / num1 + 5) / 3);
-                    double res = ((num1 / num2 - 5) / 2) + sqrt;
-                    if (num1 == 0 || num2 == 0) {
+                    double A = Double.parseDouble(enterA.getText().toString());
+                    double C = Double.parseDouble(enterC.getText().toString());
+                    double sqrt = Math.sqrt(A+C);
+                    double res = sqrt + 1/(A+C);
+                    if (A+C == 0) {
                         result.setText("Помилка, ділення на 0");
-                    } else if (((num2 / num1 + 5) / 3) < 0) {
+                    } else if (A+C < 0) {
                         result.setText("Помилка, число під коренем менше 0");
                     } else {
                         result.setText(String.format("%.5f", res));
@@ -71,7 +71,7 @@ public class FirstTaskActivity extends AppCompatActivity {
         readButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String txt = "234\n-8";
+                String txt = "12.5\n-9";
                 try {
                     example = new File("example.txt");
                     FileOutputStream fileOutput = openFileOutput(example.getName(), MODE_PRIVATE);
@@ -86,7 +86,7 @@ public class FirstTaskActivity extends AppCompatActivity {
                     InputStreamReader reader = new InputStreamReader(fileInput);
                     BufferedReader buffer = new BufferedReader(reader);
                     enterA.setText(buffer.readLine());
-                    enterB.setText(buffer.readLine());
+                    enterC.setText(buffer.readLine());
 
                     fileInput.close();
                 } catch (IOException e) {
